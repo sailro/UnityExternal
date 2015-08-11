@@ -3,8 +3,6 @@
 */.vs/
 /UnityProject/Library
 /UnityProject/Temp
-/UnityProject/Assets/UnityVS
-/UnityProject/Assets/UnityVS.meta
 /UnityProject/*.csproj
 /UnityProject/*.sln
 /UnityProject/*.user
