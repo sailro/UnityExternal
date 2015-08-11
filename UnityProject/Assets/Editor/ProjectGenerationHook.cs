@@ -39,6 +39,7 @@ public class ProjectGenerationHook
 		var dataPath = Application.dataPath.Replace('/', Path.DirectorySeparatorChar);
 
 		signature.AppendLine("  <PropertyGroup>");
+		signature.AppendLine("    <RunPostBuildEvent>Always</RunPostBuildEvent>");
 		signature.AppendLine(string.Format(@"    <PostBuildEvent>copy /Y $(TargetDir){0}.dll {1}</PostBuildEvent>", assemblyName, dataPath));
 		signature.AppendLine("  </PropertyGroup>");
 		signature.AppendLine("</Project>");
