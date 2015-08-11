@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using UnityEditor;
@@ -17,18 +17,40 @@ public class ProjectGenerationHook
 			if (name.Contains(".Editor"))
 				return content;
 
-			content = RemoveAssemblyReferenceFromProject(content, "ExternalLibrary");
-			content = AddProjectReferenceToProject(content, "ExternalLibrary", @"..\ExternalLibrary\ExternalLibrary.csproj", "{E90EFAFC-D4AC-4514-A0AF-0C8F3888EC47}");
+			const string assemblyName = "ExternalLibrary";
+			const string projectFilePath = @"..\ExternalLibrary\ExternalLibrary.csproj";
+			const string projectGuid = "{E90EFAFC-D4AC-4514-A0AF-0C8F3888EC47}";
+
+			content = RemoveAssemblyReferenceFromProject(content, assemblyName);
+			content = AddProjectReferenceToProject(content, assemblyName, projectFilePath, projectGuid);
+			content = AddCopyAssemblyToAssetsPostBuildEvent(content, assemblyName);
 
 			Debug.Log("ProjectGenerationHook:" + name);
 			return content;
 		};
 	}
 
-	private static string RemoveAssemblyReferenceFromProject(string content, string assemblytName)
+	private static string AddCopyAssemblyToAssetsPostBuildEvent(string content, string assemblyName)
 	{
-		var regex = new Regex(string.Format(@"^\s*<Reference Include=""{0}"">\r\n\s*<HintPath>.*{0}.dll</HintPath>\r\n\s*</Reference>\r\n", assemblytName), RegexOptions.Multiline);
-		return regex.Replace(content, String.Empty);
+		if (content.Contains("PostBuildEvent"))
+			return content; // already added
+
+		var signature = new StringBuilder();
+		var dataPath = Application.dataPath.Replace('/', Path.DirectorySeparatorChar);
+
+		signature.AppendLine("  <PropertyGroup>");
+		signature.AppendLine(string.Format(@"    <PostBuildEvent>copy /Y $(TargetDir){0}.dll {1}</PostBuildEvent>", assemblyName, dataPath));
+		signature.AppendLine("  </PropertyGroup>");
+		signature.AppendLine("</Project>");
+
+		var regex = new Regex("^</Project>", RegexOptions.Multiline);
+		return regex.Replace(content, signature.ToString());
+	}
+	
+	private static string RemoveAssemblyReferenceFromProject(string content, string assemblyName)
+	{
+		var regex = new Regex(string.Format(@"^\s*<Reference Include=""{0}"">\r\n\s*<HintPath>.*{0}.dll</HintPath>\r\n\s*</Reference>\r\n", assemblyName), RegexOptions.Multiline);
+		return regex.Replace(content, string.Empty);
 	}
 
 	private static string AddProjectReferenceToProject(string content, string projectName, string projectFilePath, string projectGuid)
@@ -48,4 +70,5 @@ public class ProjectGenerationHook
 		var regex = new Regex("^</Project>", RegexOptions.Multiline);
 		return regex.Replace(content, signature.ToString());
 	}
+
 }
