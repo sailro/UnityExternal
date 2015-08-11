@@ -1,9 +1,5 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 using System.Text.RegularExpressions;
-using System.Xml.Linq;
 using UnityEditor;
 using SyntaxTree.VisualStudio.Unity.Bridge;
 using UnityEngine;
@@ -16,7 +12,11 @@ public class SolutionGenerationHook
 	{
         ProjectFilesGenerator.SolutionFileGeneration += (name, content) =>
         {
-	        content = AddProjectToSolution(content, "ExternalLibrary", @"..\ExternalLibrary\ExternalLibrary.csproj", "{E90EFAFC-D4AC-4514-A0AF-0C8F3888EC47}");
+			const string assemblyName = "ExternalLibrary";
+			const string projectFilePath = @"..\ExternalLibrary\ExternalLibrary.csproj";
+			const string projectGuid = "{E90EFAFC-D4AC-4514-A0AF-0C8F3888EC47}";
+
+			content = AddProjectToSolution(content, assemblyName, projectFilePath, projectGuid);
 
 			Debug.Log("SolutionGenerationHook:" + name);
 			return content;
