@@ -47,7 +47,7 @@ public class ProjectGenerationHook
 		var regex = new Regex("^</Project>", RegexOptions.Multiline);
 		return regex.Replace(content, signature.ToString());
 	}
-	
+
 	private static string RemoveAssemblyReferenceFromProject(string content, string assemblyName)
 	{
 		var regex = new Regex(string.Format(@"^\s*<Reference Include=""{0}"">\r\n\s*<HintPath>.*{0}.dll</HintPath>\r\n\s*</Reference>\r\n", assemblyName), RegexOptions.Multiline);

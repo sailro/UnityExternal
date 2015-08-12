@@ -10,8 +10,8 @@ public class SolutionGenerationHook
 
 	static SolutionGenerationHook()
 	{
-        ProjectFilesGenerator.SolutionFileGeneration += (name, content) =>
-        {
+		ProjectFilesGenerator.SolutionFileGeneration += (name, content) =>
+		{
 			const string assemblyName = "ExternalLibrary";
 			const string projectFilePath = @"..\ExternalLibrary\ExternalLibrary.csproj";
 			const string projectGuid = "{E90EFAFC-D4AC-4514-A0AF-0C8F3888EC47}";
@@ -30,7 +30,7 @@ public class SolutionGenerationHook
 
 		var signature = new StringBuilder();
 		const string csharpProjectTypeGuid = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}";
-        signature.AppendLine(string.Format("Project(\"{0}\") = \"{1}\", \"{2}\", \"{3}\"", csharpProjectTypeGuid, projectName, projectFilePath, projectGuid));
+		signature.AppendLine(string.Format("Project(\"{0}\") = \"{1}\", \"{2}\", \"{3}\"", csharpProjectTypeGuid, projectName, projectFilePath, projectGuid));
 		signature.AppendLine("Global");
 
 		var regex = new Regex("^Global", RegexOptions.Multiline);
