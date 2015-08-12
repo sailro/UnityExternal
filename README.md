@@ -8,14 +8,14 @@ If you want to keep real project references (so being able to use refactoring or
 Here is a working prototype :
 * Using the Solution hook, we add the external project to the solution:
 ```
-Project("{C# GUID}") = "ExternalLibrary", "{...}ExternalLibrary.csproj", "{Project GUID}"
+Project("{C# GUID}") = "ExternalLibrary", "{...}\ExternalLibrary.csproj", "{Project GUID}"
 EndProject
 ```
 * Using the Project hook, we add the external project as a reference for the game assembly:
 ```
 <ItemGroup>
-  <ProjectReference Include="..\ExternalLibrary\ExternalLibrary.csproj">
-    <Project>{E90EFAFC-D4AC-4514-A0AF-0C8F3888EC47}</Project>
+  <ProjectReference Include="{...}\ExternalLibrary.csproj">
+    <Project>{Project GUID}</Project>
     <Name>ExternalLibrary</Name>
   </ProjectReference>
 </ItemGroup>
