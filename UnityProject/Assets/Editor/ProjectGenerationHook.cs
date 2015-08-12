@@ -13,10 +13,6 @@ public class ProjectGenerationHook
 	{
 		ProjectFilesGenerator.ProjectFileGeneration += (name, content) =>
 		{
-			// Do not reference in Editor projects
-			if (name.Contains(".Editor"))
-				return content;
-
 			const string assemblyName = "ExternalLibrary";
 			const string projectFilePath = @"..\ExternalLibrary\ExternalLibrary.csproj";
 			const string projectGuid = "{E90EFAFC-D4AC-4514-A0AF-0C8F3888EC47}";
