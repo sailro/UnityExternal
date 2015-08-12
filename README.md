@@ -11,7 +11,7 @@ Here is a working prototype :
 Project("{C# GUID}") = "ExternalLibrary", "{...}\ExternalLibrary.csproj", "{Project GUID}"
 EndProject
 ```
-* Using the Project hook, we add the external project as a reference for the game assembly:
+* Using the Project hook, we add the external project as a reference:
 ```
 <ItemGroup>
   <ProjectReference Include="{...}\ExternalLibrary.csproj">
