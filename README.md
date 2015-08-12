@@ -8,7 +8,7 @@ If you want to keep real project references (so being able to use refactoring or
 Here is a working prototype :
 * Using the Solution hook, we add the external project to the solution:
 ```
-Project("{C# GUID}") = "ExternalLibrary", "..\ExternalLibrary\ExternalLibrary.csproj", "{Project GUID}"
+Project("{C# GUID}") = "ExternalLibrary", "{...}ExternalLibrary.csproj", "{Project GUID}"
 EndProject
 ```
 * Using the Project hook, we add the external project as a reference for the game assembly:
@@ -24,7 +24,7 @@ EndProject
 ```
 <PropertyGroup>
   <RunPostBuildEvent>Always</RunPostBuildEvent>
-  <PostBuildEvent>copy /Y $(TargetDir)ExternalLibrary.dll Assets</PostBuildEvent>
+  <PostBuildEvent>copy /Y $(TargetDir)ExternalLibrary.dll {...}\Assets</PostBuildEvent>
 </PropertyGroup>
 ```
   * Finally we remove the reference to the assembly dll to avoid collisions with the project reference. (as we deploy a DLL in the asset folder, VSTU will try to add a reference to the DLL):
