@@ -1,7 +1,7 @@
 # UnityExternal
 Unity project demonstrating the use of an external C# project with Visual Studio Tools for Unity (VSTU).
 
-As using external projects with VSTU generated solutions is not yet supported, here is a possible workaround, using file generation hooks:
+Using external projects with VSTU generated solutions is not yet supported. But there is a possible workaround, using file generation hooks:
 https://msdn.microsoft.com/en-us/library/dn940021.aspx.
 
 Here is a working prototype :
@@ -10,7 +10,7 @@ Here is a working prototype :
 * Using the Project hook, we add a postbuild event to copy the compiled assembly DLL to the Unity asset folder (because we have to compile both in VS and Unity).
 * Using the Project hook, we remove the reference to the assembly dll to avoid collisions with the project reference. (as we deploy a DLL in the asset folder, VSTU will try to add a reference to the DLL).
 
-The intersting part is [here](/UnityProject/Assets/Editor), using two Editor scripts.
+The interesting part is [here](/UnityProject/Assets/Editor), using two Editor scripts.
 
 Now you can update easily your external projects files:
 - VS solution and projects will correctly reference your external project
