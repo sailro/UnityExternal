@@ -25,7 +25,7 @@ public class SolutionGenerationHook
 
 	private static string AddProjectToSolution(string content, string projectName, string projectFilePath, string projectGuid)
 	{
-		if (content.Contains("" + projectName + ""))
+		if (content.Contains("\"" + projectName + "\""))
 			return content; // already added
 
 		var signature = new StringBuilder();
